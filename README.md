@@ -6,11 +6,6 @@ math, a walk-forward Elo rating model, weak-form efficiency tests, a
 backtesting engine with fractional-Kelly staking, and bootstrap confidence
 intervals on every result.
 
-> ⚠️ This is an academic market-efficiency study on historical data, in the
-> tradition of the sports-betting-markets literature in financial economics.
-> It is not betting advice — in fact, its headline result is a rigorous
-> demonstration of *why* betting doesn't work.
-
 ---
 
 ## Headline findings
@@ -28,27 +23,27 @@ intervals on every result.
 model is not enough to beat the NFL closing line. The negative result *is*
 the result — and it precisely replicates the efficient-market hypothesis.
 
-## What makes this rigorous (not a toy)
+## What makes this rigorous
 
-- **Real data.** Every completed NFL game since 1999 with actual closing
+- Real data - Every completed NFL game since 1999 with actual closing
   spreads, totals, and moneylines (nflverse `games.csv`), auto-downloaded and
   cached.
-- **Proper vig removal.** Two de-vigging methods implemented from the math up:
+- Proper vig removal - Two de-vigging methods implemented from the math up:
   proportional normalization and the **power method** (solve Σpᵢᵏ = 1 by
   bisection), which correctly shades longshot prices harder.
-- **No lookahead, anywhere.** The Elo model walks forward chronologically
+- No lookahead, anywhere - The Elo model walks forward chronologically
   (K = 20, home-field = 52 rating points, log margin-of-victory damping with
   autocorrelation correction, ⅓ offseason mean reversion, franchise-relocation
   handling).
-- **Train/test discipline.** The one tunable parameter (Elo-vs-market edge
+- Train/test discipline - The one tunable parameter (Elo-vs-market edge
   threshold) is grid-searched on 2007–2017 **only**, then frozen and evaluated
   on 2018–2025.
-- **Uncertainty on everything.** 10,000-resample bootstrap CIs on every ROI,
+- Uncertainty on everything - 10,000-resample bootstrap CIs on every ROI,
   Wilson intervals on every proportion, t-tests and exact binomial tests,
   plus an explicit multiple-comparisons warning.
-- **A control group.** A seeded random-betting strategy measures the house
+- A control group - A seeded random-betting strategy measures the house
   edge empirically — the benchmark every "system" must be judged against.
-- **Engineering hygiene.** Modular package, type hints, dataclasses, logging,
+- Engineering hygiene - Modular package, type hints, dataclasses, logging,
   CLI with argparse, deterministic seeds, and a **20-test pytest suite**
   covering odds math, Elo updates, settlement arithmetic, Kelly sizing, and
   drawdown logic.
@@ -92,7 +87,7 @@ Outputs: `output/REPORT.md` (the full write-up with tables) and six figures in
 efficiency scatter, Elo history, holdout bankroll curves, and ROI confidence
 intervals.
 
-## The math, briefly
+## The math
 
 - **Implied probability:** American odds A → p = 100/(A+100) if A>0 else |A|/(|A|+100)
 - **Power de-vig:** find k ≥ 1 with Σ pᵢᵏ = 1 (bisection; unique root since f is monotone)
